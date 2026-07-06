@@ -1,69 +1,529 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Landing Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      background: #f4f4f9;
-      color: #333;
-    }
-    header {
-      background: #4CAF50;
-      color: white;
-      padding: 40px 20px;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-    }
-    header p {
-      margin-top: 10px;
-      font-size: 1.2em;
-    }
-    .content {
-      padding: 40px 20px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 12px 25px;
-      margin-top: 20px;
-      background: #4CAF50;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background 0.3s ease;
-    }
-    .btn:hover {
-      background: #45a049;
-    }
-    footer {
-      background: #333;
-      color: white;
-      padding: 15px;
-      margin-top: 40px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
+<title>Karamraji Institute — Enquiry Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2545;
+    --navy-deep:#071A33;
+    --cream:#FAF7F2;
+    --orange:#FF6A2B;
+    --orange-soft:#FFE7DA;
+    --whatsapp:#25D366;
+    --ink:#1C1F26;
+    --muted:#6B7280;
+    --line:#E8E3DA;
+    --radius:16px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    max-width:480px;
+    margin:0 auto;
+    min-height:100vh;
+    position:relative;
+    padding-bottom:90px;
+  }
+  h1,h2,h3,h4,.display{font-family:'Poppins',sans-serif;}
+  a{text-decoration:none;color:inherit;}
+  button{font-family:inherit;cursor:pointer;}
+
+  /* ---------- Header ---------- */
+  header.top{
+    background:linear-gradient(160deg,var(--navy) 0%,var(--navy-deep) 100%);
+    color:#fff;
+    padding:26px 20px 32px;
+    position:relative;
+    overflow:hidden;
+    border-radius:0 0 28px 28px;
+  }
+  header.top::after{
+    content:"";
+    position:absolute; right:-50px; top:-60px;
+    width:200px;height:200px;border-radius:50%;
+    background:rgba(255,106,43,0.18);
+  }
+  header.top::before{
+    content:"";
+    position:absolute; left:-60px; bottom:-70px;
+    width:160px;height:160px;border-radius:50%;
+    background:rgba(255,255,255,0.05);
+  }
+  .brand-row{display:flex;align-items:center;gap:12px;position:relative;z-index:1;}
+  .brand-mark{
+    width:50px;height:50px;border-radius:14px;
+    background:linear-gradient(145deg,var(--orange),#E85A1C);
+    box-shadow:0 6px 16px rgba(255,106,43,0.35);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Poppins',sans-serif;font-weight:800;font-size:17px;color:#fff;
+    flex-shrink:0;
+  }
+  .brand-name{font-size:18.5px;font-weight:700;line-height:1.3;}
+  .brand-sub{font-size:12.5px;color:#FFCDB0;font-weight:600;letter-spacing:.5px;margin-top:2px;text-transform:uppercase;}
+  .badges{display:flex;gap:6px;margin-top:16px;position:relative;z-index:1;flex-wrap:wrap;}
+  .badge{
+    font-size:10.5px;font-weight:600;color:#fff;background:rgba(255,255,255,0.12);
+    padding:4px 9px;border-radius:20px;border:1px solid rgba(255,255,255,0.18);
+  }
+
+  /* ---------- Nav cards (vertical menu) ---------- */
+  .nav-cards{display:flex;flex-direction:column;gap:12px;padding:20px 16px 4px;}
+  .nav-card{
+    background:#fff;border:1px solid var(--line);border-radius:18px;
+    padding:16px 16px;
+    display:flex;align-items:center;gap:14px;text-align:left;
+    box-shadow:0 2px 10px rgba(11,37,69,0.05);
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    position:relative; overflow:hidden;
+  }
+  .nav-card:active{transform:scale(.98);}
+  .nav-card::before{
+    content:""; position:absolute; left:0; top:0; bottom:0; width:4px;
+    background:var(--card-accent, var(--orange)); opacity:0;
+    transition:opacity .15s ease;
+  }
+  .nav-card.active{border-color:var(--card-accent, var(--orange)); box-shadow:0 6px 18px rgba(11,37,69,0.10);}
+  .nav-card.active::before{opacity:1;}
+  .nav-card[data-view="courses"]{ --card-accent:#FF6A2B; }
+  .nav-card[data-view="about"]{ --card-accent:#0B2545; }
+  .nav-card[data-view="facilities"]{ --card-accent:#0E7C86; }
+  .nav-icon-wrap{
+    width:52px;height:52px;border-radius:14px;flex-shrink:0;
+    background:color-mix(in srgb, var(--card-accent, var(--orange)) 12%, white);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .nav-icon{width:25px;height:25px;color:var(--card-accent, var(--navy));}
+  .nav-text{flex:1;min-width:0;}
+  .nav-label{font-size:15px;font-weight:700;color:var(--navy-deep);display:block;}
+  .nav-sub{font-size:12px;color:var(--muted);margin-top:2px;display:block;}
+  .nav-chev{color:var(--muted);flex-shrink:0;width:18px;height:18px;}
+
+  /* ---------- Sections ---------- */
+  .view{padding:6px 16px 20px; animation:fade .25s ease;}
+  .view.no-pad{padding:0 0 20px;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  .section-title{font-size:15px;font-weight:700;color:var(--navy-deep);margin:18px 0 10px;display:flex;align-items:center;gap:8px;}
+  .section-title .dot{width:6px;height:6px;border-radius:50%;background:var(--orange);}
+
+  .home-hero{padding:20px 16px 4px;}
+  .home-hero h2{font-size:19px;font-weight:700;color:var(--navy-deep);margin:0 0 6px;line-height:1.4;}
+  .home-hero p{font-size:13px;color:var(--muted);margin:0;line-height:1.55;}
+  .stat-strip{display:flex;gap:8px;margin-top:14px;overflow-x:auto;padding-bottom:2px;}
+  .stat-chip{
+    flex:0 0 auto;background:#fff;border:1px solid var(--line);border-radius:12px;
+    padding:9px 12px;font-size:11.5px;font-weight:600;color:var(--navy-deep);white-space:nowrap;
+  }
+  .stat-chip b{color:var(--orange);font-family:'Poppins',sans-serif;}
+
+  /* ---------- Course list ---------- */
+  .course-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;
+  }
+  .course-mono{
+    width:44px;height:44px;border-radius:10px;background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;
+    font-family:'Poppins',sans-serif;
+  }
+  .course-info{flex:1;min-width:0;}
+  .course-info h4{margin:0 0 3px;font-size:14.5px;color:var(--navy-deep);}
+  .course-meta{font-size:11.5px;color:var(--muted);}
+  .course-fee{font-size:13px;font-weight:700;color:var(--orange);white-space:nowrap;}
+  .chev{color:var(--muted);flex-shrink:0;}
+
+  /* ---------- Course detail ---------- */
+  .back-btn{
+    display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;
+    color:var(--navy-deep);background:#fff;border:1px solid var(--line);
+    padding:7px 12px;border-radius:20px;margin:2px 0 14px;
+  }
+  .detail-hero{
+    background:var(--navy);color:#fff;border-radius:var(--radius);padding:18px;margin-bottom:14px;
+    position:relative;overflow:hidden;
+  }
+  .detail-hero::after{content:"";position:absolute;right:-30px;bottom:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,106,43,0.18);}
+  .detail-hero .tag{font-size:10.5px;font-weight:700;background:var(--orange);padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:8px;}
+  .detail-hero h3{margin:0 0 4px;font-size:17px;position:relative;z-index:1;}
+  .detail-hero p{margin:0;font-size:12px;color:#CBD5E1;position:relative;z-index:1;}
+  .detail-stats{display:flex;gap:8px;margin-top:12px;position:relative;z-index:1;}
+  .dstat{background:rgba(255,255,255,.1);border-radius:10px;padding:8px 10px;flex:1;text-align:center;}
+  .dstat span{display:block;font-size:12.5px;font-weight:700;}
+  .dstat small{font-size:9.5px;color:#CBD5E1;}
+
+  .card-block{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:15px;margin-bottom:12px;}
+  .card-block h4{margin:0 0 8px;font-size:13.5px;color:var(--navy-deep);}
+  .card-block p{margin:0;font-size:13px;color:var(--ink);line-height:1.6;}
+
+  .module-row{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);}
+  .module-row:last-child{border-bottom:none;}
+  .module-tag{
+    flex-shrink:0;width:34px;height:34px;border-radius:8px;background:var(--orange-soft);color:var(--orange);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;font-family:'Poppins',sans-serif;
+  }
+  .module-row h5{margin:0 0 2px;font-size:13px;color:var(--navy-deep);}
+  .module-row p{margin:0;font-size:11.5px;color:var(--muted);line-height:1.4;}
+
+  .fee-line{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;}
+  .fee-line.total{border-top:1px dashed var(--line);margin-top:4px;padding-top:10px;font-weight:700;color:var(--navy-deep);}
+  .fee-line span:last-child{font-weight:600;}
+  .scholar-note{
+    background:var(--orange-soft);color:#8A3A12;font-size:11.5px;border-radius:10px;padding:8px 10px;margin-top:8px;line-height:1.5;
+  }
+  .perk{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;color:var(--ink);margin-bottom:8px;line-height:1.5;}
+  .perk svg{flex-shrink:0;margin-top:1px;color:var(--whatsapp);}
+
+  .wa-btn{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--whatsapp);color:#fff;font-weight:700;font-size:14px;
+    padding:13px;border-radius:14px;border:none;width:100%;margin-top:4px;
+  }
+  .wa-btn svg{width:19px;height:19px;}
+
+  /* ---------- About ---------- */
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .why-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 10px;}
+  .why-card svg{color:var(--orange);width:20px;height:20px;margin-bottom:6px;}
+  .why-card p{margin:0;font-size:11.5px;font-weight:600;color:var(--navy-deep);line-height:1.4;}
+
+  .faculty-scroll{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;}
+  .faculty-card{flex:0 0 auto;width:100px;text-align:center;}
+  .faculty-card img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid var(--orange-soft);}
+  .faculty-card h5{margin:6px 0 1px;font-size:11.5px;color:var(--navy-deep);}
+  .faculty-card small{font-size:9.5px;color:var(--muted);}
+
+  /* ---------- Facilities ---------- */
+  .gallery{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .gallery figure{margin:0;border-radius:12px;overflow:hidden;position:relative;aspect-ratio:4/3;background:#eee;}
+  .gallery img{width:100%;height:100%;object-fit:cover;display:block;}
+  .gallery figcaption{
+    position:absolute;bottom:0;left:0;right:0;padding:6px 8px;font-size:10.5px;font-weight:600;color:#fff;
+    background:linear-gradient(to top, rgba(7,26,51,.85), transparent);
+  }
+  .facility-list{margin-top:10px;}
+  .facility-item{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);}
+  .facility-item:last-child{border-bottom:none;}
+  .facility-item svg{color:var(--orange);flex-shrink:0;margin-top:2px;width:18px;height:18px;}
+  .facility-item h5{margin:0 0 2px;font-size:12.5px;color:var(--navy-deep);}
+  .facility-item p{margin:0;font-size:11.5px;color:var(--muted);line-height:1.4;}
+
+  /* ---------- Footer ---------- */
+  footer.site-footer{padding:18px 16px 4px;text-align:center;}
+  footer.site-footer p{font-size:11px;color:var(--muted);margin:2px 0;}
+  .map-link{font-size:12px;color:var(--orange);font-weight:600;}
+
+  /* ---------- Floating WhatsApp ---------- */
+  .fab-wa{
+    position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+    width:calc(100% - 32px);max-width:448px;
+    background:var(--whatsapp);color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;
+    font-weight:700;font-size:14px;padding:13px;border-radius:14px;
+    box-shadow:0 8px 20px rgba(0,0,0,.18);z-index:50;
+  }
+  .fab-wa svg{width:19px;height:19px;}
+
+  .hidden{display:none !important;}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Welcome to My Landing Page</h1>
-    <p>A simple, clean design for quick projects</p>
+
+<!-- ============ HOME ============ -->
+<section id="view-home" class="view no-pad">
+  <header class="top">
+    <div class="brand-row">
+      <div class="brand-mark">KI</div>
+      <div>
+        <div class="brand-name">Karamraji Institute<br>of Computer Science &amp; IT</div>
+        <div class="brand-sub">Enquiry Portal</div>
+      </div>
+    </div>
+    <div class="badges">
+      <span class="badge">Sultanpur, UP</span>
+      <span class="badge">NIELIT Accredited</span>
+      <span class="badge">ICAI Partner</span>
+    </div>
   </header>
 
-  <div class="content">
-    <h2>About This Page</h2>
-    <p>This is a lightweight landing page template you can customize for your project, portfolio, or class notes.</p>
-    <a href="#signup" class="btn">Get Started</a>
+  <div class="home-hero">
+    <h2>सुल्तानपुर का भरोसेमंद कंप्युटर इंस्टिट्यूट</h2>
+    <p>O Level, CCC, Tally Prime और DIT — सरकारी मान्यता प्राप्त कोर्सेज़ के साथ। नीचे दिए गए विकल्पों से जानकारी देखें।</p>
+    <div class="stat-strip">
+      <div class="stat-chip"><b>22+ yrs</b> team experience</div>
+      <div class="stat-chip"><b>4</b> Govt. courses</div>
+      <div class="stat-chip"><b>₹12,000</b> scholarship</div>
+      <div class="stat-chip"><b>1:1</b> student : PC</div>
+    </div>
   </div>
 
-  <footer>
-    <p>&copy; 2026 My Landing Page. All rights reserved.</p>
+  <nav class="nav-cards">
+    <button class="nav-card" data-view="courses" onclick="showView('courses')">
+      <div class="nav-icon-wrap"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14"/><path d="M4 19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2"/><path d="M8 7h8M8 11h8"/></svg></div>
+      <div class="nav-text">
+        <span class="nav-label">Courses</span>
+        <span class="nav-sub">O Level, CCC, Tally, DIT — fees व syllabus</span>
+      </div>
+      <svg class="nav-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    <button class="nav-card" data-view="about" onclick="showView('about')">
+      <div class="nav-icon-wrap"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg></div>
+      <div class="nav-text">
+        <span class="nav-label">About Us</span>
+        <span class="nav-sub">हम कौन हैं, क्यों चुनें, हमारी टीम</span>
+      </div>
+      <svg class="nav-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    <button class="nav-card" data-view="facilities" onclick="showView('facilities')">
+      <div class="nav-icon-wrap"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></div>
+      <div class="nav-text">
+        <span class="nav-label">Facilities</span>
+        <span class="nav-sub">Campus gallery व lab facilities</span>
+      </div>
+      <svg class="nav-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </nav>
+
+  <footer class="site-footer">
+    <p><strong>Karamraji Institute of Computer Science &amp; IT</strong></p>
+    <p>Sultanpur, Uttar Pradesh · Mon–Sat, 9:00 AM – 5:00 PM</p>
+    <p><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Karamraji%20Institute%20of%20Computer%20Science%20%26%20IT%20Sultanpur" target="_blank">Google Maps पर देखें →</a></p>
   </footer>
+</section>
+
+<!-- ============ COURSES LIST ============ -->
+<section id="view-courses" class="view hidden">
+  <button class="back-btn" onclick="showView('home')">← Home पर वापस जाएं</button>
+  <div class="section-title"><span class="dot"></span>सभी Courses</div>
+  <div id="course-list"></div>
+</section>
+
+<!-- ============ COURSE DETAIL ============ -->
+<section id="view-course-detail" class="view hidden">
+  <button class="back-btn" onclick="showView('courses')">← Courses पर वापस जाएं</button>
+  <div id="course-detail-content"></div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="view-about" class="view hidden">
+  <button class="back-btn" onclick="showView('home')">← Home पर वापस जाएं</button>
+  <div class="card-block">
+    <h4>हम कौन हैं</h4>
+    <p>Karamraji Institute of Computer Science &amp; IT, Sultanpur में पिछले कई वर्षों से NIELIT और ICAI मान्यता प्राप्त कंप्युटर कोर्सेज़ करा रहा है। हमारी टीम के पास मिलाकर 22+ साल का teaching experience है, और हर साल सैकड़ों students यहाँ से job-ready स्किल्स सीखकर निकलते हैं।</p>
+  </div>
+
+  <div class="section-title"><span class="dot"></span>हमें क्यों चुनें</div>
+  <div class="why-grid">
+    <div class="why-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><p>1 Student = 1 PC हर lab class में</p></div>
+    <div class="why-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18"/></svg><p>पूरी तरह AC Computer Lab</p></div>
+    <div class="why-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5V6a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2Z"/></svg><p>Books, Notes व Test Papers फ्री</p></div>
+    <div class="why-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><p>Experienced Faculty (22+ yrs)</p></div>
+    <div class="why-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><p>Hindi व English में AV Lab learning</p></div>
+    <div class="why-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11Z"/></svg><p>NIELIT व ICAI मान्यता प्राप्त</p></div>
+  </div>
+
+  <div class="section-title"><span class="dot"></span>हमारी टीम</div>
+  <div class="faculty-scroll">
+    <div class="faculty-card"><img src="faculty-1.jpg" alt="Ashutosh Kr. Jaiswal"><h5>Ashutosh Jaiswal</h5><small>Center Manager</small></div>
+    <div class="faculty-card"><img src="faculty-2.jpg" alt="J.P. Mishra"><h5>J.P. Mishra</h5><small>Academic Head</small></div>
+    <div class="faculty-card"><img src="faculty-3.jpg" alt="Aditya Pathak"><h5>Aditya Pathak</h5><small>Programming &amp; IT</small></div>
+    <div class="faculty-card"><img src="faculty-4.jpg" alt="Abha Mishra"><h5>Abha Mishra</h5><small>Web Dev &amp; Office</small></div>
+    <div class="faculty-card"><img src="faculty-5.jpg" alt="Somya Verma"><h5>Somya Verma</h5><small>Accounts &amp; Tally</small></div>
+    <div class="faculty-card"><img src="faculty-6.jpg" alt="Nainsi Maurya"><h5>Nainsi Maurya</h5><small>Counselor</small></div>
+  </div>
+
+  <div class="card-block">
+    <h4>सरकारी छात्रवृत्ति</h4>
+    <p>O Level में Girls, SC/ST और दिव्यांग छात्रों को ₹12,000 तक की सरकारी scholarship मिलती है। योग्यता जानने के लिए हमसे WhatsApp पर संपर्क करें।</p>
+  </div>
+</section>
+
+<!-- ============ FACILITIES ============ -->
+<section id="view-facilities" class="view hidden">
+  <button class="back-btn" onclick="showView('home')">← Home पर वापस जाएं</button>
+  <div class="section-title"><span class="dot"></span>हमारा Campus</div>
+  <div class="gallery">
+    <figure><img src="facility-1.jpg" alt="Computer Lab"><figcaption>Computer Lab</figcaption></figure>
+    <figure><img src="facility-2.jpg" alt="AC Classroom"><figcaption>AC Classroom</figcaption></figure>
+    <figure><img src="facility-3.jpg" alt="Library"><figcaption>Library</figcaption></figure>
+    <figure><img src="facility-4.jpg" alt="AV Lab"><figcaption>AV Lab</figcaption></figure>
+    <figure><img src="facility-5.jpg" alt="Reception"><figcaption>Reception</figcaption></figure>
+    <figure><img src="facility-6.jpg" alt="Building"><figcaption>Building</figcaption></figure>
+  </div>
+
+  <div class="section-title"><span class="dot"></span>Facility Highlights</div>
+  <div class="facility-list">
+    <div class="facility-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg><div><h5>फ्री किताबें</h5><p>सभी छात्रों को books, notes और test papers बिल्कुल मुफ्त।</p></div></div>
+    <div class="facility-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg><div><h5>1 Student = 1 PC</h5><p>हर lab class में एक छात्र को एक अलग computer मिलता है।</p></div></div>
+    <div class="facility-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg><div><h5>AC Computer Lab</h5><p>पूरी तरह Air-Conditioned lab, बेहतर focus के लिए।</p></div></div>
+    <div class="facility-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg><div><h5>AV Lab</h5><p>Hindi और English दोनों में Audio-Visual learning।</p></div></div>
+    <div class="facility-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg><div><h5>Doubt Classes</h5><p>Regular doubt-clearing sessions हर हफ्ते।</p></div></div>
+    <div class="facility-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg><div><h5>Typing Practice</h5><p>हर 2nd और 4th Saturday को special sessions।</p></div></div>
+  </div>
+</section>
+
+<div class="fab-wa" id="fab-wa" onclick="openWA()">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.09-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm5.2 14.2c-.22.62-1.25 1.18-1.73 1.24-.44.06-.98.08-1.58-.1-.36-.11-.82-.26-1.4-.5-2.47-1.06-4.08-3.55-4.2-3.72-.12-.17-1-1.33-1-2.54s.63-1.8.85-2.05c.22-.25.48-.31.64-.31h.46c.15 0 .35-.06.55.42.22.53.74 1.83.8 1.96.06.13.1.28.02.45-.08.17-.13.28-.26.43-.13.15-.27.34-.39.46-.13.13-.26.27-.11.53.15.26.67 1.11 1.44 1.8.99.88 1.82 1.15 2.08 1.28.26.13.41.11.56-.07.15-.17.63-.74.8-1 .17-.26.34-.21.56-.13.22.08 1.42.67 1.66.79.24.12.4.18.46.28.06.11.06.61-.16 1.23Z"/></svg>
+  <span id="fab-wa-label">WhatsApp पर Enquiry करें</span>
+</div>
+
+<script>
+const PHONE = "917267045730";
+const courses = [
+  {
+    id:"olevel", code:"OL", name:"NIELIT O Level Diploma", tagline:"1 वर्ष · सरकारी नौकरियों में BCA के बराबर मान्यता",
+    duration:"1 साल", eligibility:"12वीं पास", fee:"₹16,500",
+    about:"NIELIT का सबसे प्रतिष्ठित diploma — 2 semester, 4 papers में Python, IoT, Web Design और IT Tools सब एक साथ। Graduation के साथ भी कर सकते हैं।",
+    modules:[
+      {tag:"M1", title:"IT Tools & Network Basics", desc:"LibreOffice, MS Office, Email, Internet, Networking"},
+      {tag:"M2", title:"Web Designing & Publishing", desc:"HTML5, CSS3, JavaScript, Photo Editor"},
+      {tag:"M3", title:"Python Programming", desc:"Python Basics, Functions, File Handling, NumPy, Pandas"},
+      {tag:"M4", title:"Internet of Things (IoT)", desc:"IoT concepts, Arduino, Raspberry Pi, real-world projects"},
+    ],
+    feeLines:[["Course Fee","₹16,500"],["Offer Price","₹15,500"]],
+    scholarship:"Girls / SC-ST / दिव्यांग छात्रों को ₹12,000 तक सरकारी छात्रवृत्ति",
+    perks:["ADCA Certificate — Free (course पूरा होने पर)","CCC Certificate — Free (exam के बाद)","₹12,000 तक सरकारी छात्रवृत्ति (पात्र छात्रों को)"]
+  },
+  {
+    id:"ccc", code:"CCC", name:"Course on Computer Concepts", tagline:"3 माह · सरकारी नौकरियों के लिए अनिवार्य",
+    duration:"3 महीने", eligibility:"10वीं पास", fee:"₹3,560",
+    about:"CCC सरकारी नौकरियों के लिए अनिवार्य है — Bank, Railway, UP Police, Lekhpal, UP Vidyut Vibhag में मांगा जाता है। 10वीं के बाद सीधे कर सकते हैं, सबसे किफायती course।",
+    modules:[
+      {tag:"1", title:"Computer Fundamentals", desc:"Hardware, Software, Operating System basics"},
+      {tag:"2", title:"Office Tools", desc:"MS Word, Excel, PowerPoint"},
+      {tag:"3", title:"Internet & Email", desc:"Internet surfing, Gmail, online services, UPI"},
+      {tag:"4", title:"Networks & Security", desc:"Basic networking, cyber security awareness"},
+    ],
+    feeLines:[["एक बार में","₹3,560"],["Discount में","₹3,060"]],
+    scholarship:null,
+    perks:["Certificate in Office Automation (COA) — Free","O Level में enroll होने पर CCC की fees adjust होगी"]
+  },
+  {
+    id:"tally", code:"TP", name:"Tally Prime", tagline:"4 माह · Accounting & GST Software",
+    duration:"4 महीने", eligibility:"10वीं पास", fee:"₹5,000",
+    about:"हर छोटे-बड़े business में Tally operator चाहिए। GST filing, payroll, inventory और ITR सब एक जगह सीखें — 4 महीने में job-ready।",
+    modules:[
+      {tag:"1", title:"Tally Basics & Accounting", desc:"Fundamentals, Bills, Trial Balance, P/L, Balance Sheet"},
+      {tag:"2", title:"Inventory & Business Mgmt", desc:"Purchase, Sales, Invoicing, Stock Management"},
+      {tag:"3", title:"GST, TCS & Income Tax", desc:"GST Filing, Returns, TCS, ITR basics"},
+      {tag:"4", title:"MS Excel for Accounting", desc:"Formulas, VLOOKUP, Charts, MIS reports"},
+    ],
+    feeLines:[["एक बार में","₹5,000"],["Discount में","₹4,500"]],
+    scholarship:null,
+    perks:["MS Excel Accounting Module — Included","Tally Certificate (exam के बाद)"]
+  },
+  {
+    id:"dit", code:"DIT", name:"Diploma in Information Technology", tagline:"1 वर्ष · Complete IT diploma",
+    duration:"1 साल", eligibility:"12वीं पास", fee:"₹12,500",
+    about:"Web Design, C Language, .NET और Database एक साथ सीखें। IT sector में job के लिए excellent foundation — 2 semesters में practical-first approach।",
+    modules:[
+      {tag:"S1", title:"IT Tools & Business System", desc:"MS Office, Email, Internet"},
+      {tag:"S1", title:"Internet & Web Design", desc:"HTML5, CSS3, JavaScript"},
+      {tag:"S2", title:"C Language Programming", desc:"Loops, Arrays, Functions, Pointers"},
+      {tag:"S2", title:"Dot Net Technology", desc:"C#, ASP.NET basics, DBMS"},
+    ],
+    feeLines:[["एक बार में","₹12,500"],["Discount में","₹11,500"]],
+    scholarship:null,
+    perks:["DCA Certificate — Free","CCC Certificate — exam के बाद Free","ADCA Certificate — exam के बाद Free"]
+  }
+];
+
+function waLink(text){
+  return `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
+}
+function openWA(){
+  window.open(waLink("नमस्ते, Karamraji Institute में Admission की जानकारी चाहिए"), "_blank");
+}
+
+function renderCourseList(){
+  const el = document.getElementById('course-list');
+  el.innerHTML = courses.map(c => `
+    <div class="course-card" onclick="openCourse('${c.id}')">
+      <div class="course-mono">${c.code}</div>
+      <div class="course-info">
+        <h4>${c.name}</h4>
+        <div class="course-meta">${c.duration} · ${c.eligibility}</div>
+      </div>
+      <div class="course-fee">${c.fee}</div>
+      <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+    </div>
+  `).join('');
+}
+
+function openCourse(id){
+  const c = courses.find(x => x.id === id);
+  const el = document.getElementById('course-detail-content');
+  el.innerHTML = `
+    <div class="detail-hero">
+      <span class="tag">${c.code}</span>
+      <h3>${c.name}</h3>
+      <p>${c.tagline}</p>
+      <div class="detail-stats">
+        <div class="dstat"><span>${c.duration}</span><small>Duration</small></div>
+        <div class="dstat"><span>${c.eligibility}</span><small>Eligibility</small></div>
+        <div class="dstat"><span>${c.fee}</span><small>Fee</small></div>
+      </div>
+    </div>
+
+    <div class="card-block">
+      <h4>कोर्स के बारे में</h4>
+      <p>${c.about}</p>
+    </div>
+
+    <div class="card-block">
+      <h4>Syllabus</h4>
+      ${c.modules.map(m => `
+        <div class="module-row">
+          <div class="module-tag">${m.tag}</div>
+          <div><h5>${m.title}</h5><p>${m.desc}</p></div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="card-block">
+      <h4>फीस विवरण</h4>
+      ${c.feeLines.map(f => `<div class="fee-line"><span>${f[0]}</span><span>${f[1]}</span></div>`).join('')}
+      ${c.scholarship ? `<div class="scholar-note">🎓 ${c.scholarship}</div>` : ''}
+    </div>
+
+    <div class="card-block">
+      <h4>अतिरिक्त फायदे</h4>
+      ${c.perks.map(p => `
+        <div class="perk">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
+          <span>${p}</span>
+        </div>
+      `).join('')}
+      <button class="wa-btn" onclick="event.stopPropagation(); window.open('${waLink('नमस्ते, ' + c.name + ' कोर्स की जानकारी चाहिए')}','_blank')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.09-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm5.2 14.2c-.22.62-1.25 1.18-1.73 1.24-.44.06-.98.08-1.58-.1-.36-.11-.82-.26-1.4-.5-2.47-1.06-4.08-3.55-4.2-3.72-.12-.17-1-1.33-1-2.54s.63-1.8.85-2.05c.22-.25.48-.31.64-.31h.46c.15 0 .35-.06.55.42.22.53.74 1.83.8 1.96.06.13.1.28.02.45-.08.17-.13.28-.26.43-.13.15-.27.34-.39.46-.13.13-.26.27-.11.53.15.26.67 1.11 1.44 1.8.99.88 1.82 1.15 2.08 1.28.26.13.41.11.56-.07.15-.17.63-.74.8-1 .17-.26.34-.21.56-.13.22.08 1.42.67 1.66.79.24.12.4.18.46.28.06.11.06.61-.16 1.23Z"/></svg>
+        Enquiry करें — ${c.name}
+      </button>
+    </div>
+  `;
+  showView('course-detail');
+}
+
+function showView(name){
+  document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+  document.getElementById('view-' + name).classList.remove('hidden');
+  document.querySelectorAll('.nav-card').forEach(b => b.classList.remove('active'));
+  const navBtn = document.querySelector(`.nav-card[data-view="${name}"]`);
+  if(navBtn) navBtn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+
+  const fab = document.getElementById('fab-wa');
+  if(name === 'course-detail'){ fab.classList.add('hidden'); } else { fab.classList.remove('hidden'); }
+}
+
+renderCourseList();
+showView('home');
+
+// Home state has no active nav tab
+document.querySelectorAll('.nav-card').forEach(b => b.classList.remove('active'));
+</script>
 </body>
 </html>
