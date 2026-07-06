@@ -65,7 +65,7 @@
     font-family:'Poppins',sans-serif;font-weight:800;font-size:17px;color:#fff;
     flex-shrink:0;
   }
-  .brand-name{font-size:40.5px;font-weight:700;line-height:1.3;}
+  .brand-name{font-size:30.5px;font-weight:700;line-height:1.3;}
   .brand-sub{font-size:12.5px;color:#FFCDB0;font-weight:600;letter-spacing:.5px;margin-top:2px;text-transform:uppercase;}
   .badges{display:flex;gap:6px;margin-top:16px;position:relative;z-index:1;flex-wrap:wrap;}
   .badge{
@@ -76,7 +76,7 @@
   /* ---------- Nav cards (vertical menu) ---------- */
   .nav-cards{display:flex;flex-direction:column;gap:12px;padding:20px 16px 4px;}
   .nav-card{
-    background:#fff;border:1px solid var(--line);border-radius:18px;
+    background:#93cbed;border:1px solid var(--line);border-radius:18px;
     padding:16px 16px;
     display:flex;align-items:center;gap:14px;text-align:left;
     box-shadow:0 2px 10px rgba(11,37,69,0.05);
@@ -91,7 +91,7 @@
   }
   .nav-card.active{border-color:var(--card-accent, var(--orange)); box-shadow:0 6px 18px rgba(11,37,69,0.10);}
   .nav-card.active::before{opacity:1;}
-  .nav-card[data-view="courses"]{ --card-accent:#FF6A2B; }
+  .nav-card[data-view="courses"]{ --card-accent:#84c0f1; }
   .nav-card[data-view="about"]{ --card-accent:#0B2545; }
   .nav-card[data-view="facilities"]{ --card-accent:#0E7C86; }
   .nav-icon-wrap{
@@ -101,7 +101,7 @@
   }
   .nav-icon{width:25px;height:25px;color:var(--card-accent, var(--navy));}
   .nav-text{flex:1;min-width:0;}
-  .nav-label{font-size:15px;font-weight:700;color:var(--navy-deep);display:block;}
+  .nav-label{font-size:20px;font-weight:700;color:var(--navy-deep);display:block;}
   .nav-sub{font-size:12px;color:var(--muted);margin-top:2px;display:block;}
   .nav-chev{color:var(--muted);flex-shrink:0;width:18px;height:18px;}
 
@@ -247,8 +247,7 @@
   </header>
 
   <div class="home-hero">
-    <h2>सुल्तानपुर का पुराना कंप्युटर इंस्टिट्यूट</h2>
-    <p>O Level, CCC, Tally Prime और DIT — सरकारी मान्यता प्राप्त कोर्सेज़ के साथ। नीचे दिए गए विकल्पों से जानकारी देखें।</p>
+    
     
 
   <nav class="nav-cards">
@@ -365,7 +364,7 @@
 const PHONE = "917267045730";
 const courses = [
   {
-    id:"olevel", code:"OL", name:"NIELIT O Level Diploma", tagline:"1 वर्ष · सरकारी नौकरियों में BCA के बराबर मान्यता",
+    id:"olevel", code:"OL", name:"O Level", tagline:"1 वर्ष · सरकारी नौकरियों में सबसे जादा मांग ",
     duration:"1 साल", eligibility:"12वीं पास", fee:"₹16,500",
     about:"NIELIT का सबसे प्रतिष्ठित diploma — 2 semester, 4 papers में Python, IoT, Web Design और IT Tools सब एक साथ। Graduation के साथ भी कर सकते हैं।",
     modules:[
