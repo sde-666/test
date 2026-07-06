@@ -8,10 +8,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#0B2545;
+    --navy:#5d9ce9;
     --navy-deep:#071A33;
     --cream:#FAF7F2;
-    --orange:#FF6A2B;
+    --orange:#6aa1f8;
     --orange-soft:#FFE7DA;
     --whatsapp:#25D366;
     --ink:#1C1F26;
@@ -496,7 +496,7 @@ function openCourse(id){
   showView('course-detail');
 }
 
-function showView(name){
+function showView(name, fromPopState){
   document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
   document.getElementById('view-' + name).classList.remove('hidden');
   document.querySelectorAll('.nav-card').forEach(b => b.classList.remove('active'));
@@ -506,10 +506,28 @@ function showView(name){
 
   const fab = document.getElementById('fab-wa');
   if(name === 'course-detail'){ fab.classList.add('hidden'); } else { fab.classList.remove('hidden'); }
+
+  // Push a history entry so the browser/device back button steps through
+  // in-app screens instead of leaving the site. Skip pushing when this
+  // call itself came from a back-button press (popstate) to avoid loops.
+  if(!fromPopState){
+    history.pushState({ view: name }, '', '#' + name);
+  }
 }
 
+// When the user presses the browser/device back button, go back one
+// in-app screen (using the view saved in that history entry) rather
+// than navigating away from the page entirely.
+window.addEventListener('popstate', (e) => {
+  const target = (e.state && e.state.view) ? e.state.view : 'home';
+  showView(target, true);
+});
+
+// Give the very first (home) screen its own history entry to land on.
+history.replaceState({ view: 'home' }, '', '#home');
+
 renderCourseList();
-showView('home');
+showView('home', true);
 
 // Home state has no active nav tab
 document.querySelectorAll('.nav-card').forEach(b => b.classList.remove('active'));
